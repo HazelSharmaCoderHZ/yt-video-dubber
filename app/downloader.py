@@ -11,19 +11,18 @@ class VideoDownloader:
 
     def download(self, url: str) -> Path:
         ydl_opts = {
-            "format": "best",
+            "format": "bestvideo+bestaudio/best",
+            "merge_output_format": "mp4",
             "outtmpl": str(self.output_path),
             "quiet": True,
             "noplaylist": True,
+            "overwrites": True,
         }
+
         logger.info("Downloading video...")
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=True)
             filename = ydl.prepare_filename(info)
 
-        downloaded_file = Path(filename)
-
-        if downloaded_file.suffix != ".mp4":
-            downloaded_file = downloaded_file.with_suffix(".mp4")
-
-        return downloaded_file
+        return Path(filename)
