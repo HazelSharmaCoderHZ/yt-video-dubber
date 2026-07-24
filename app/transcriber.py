@@ -24,11 +24,14 @@ class Transcriber:
             vad_filter=True,
         )
 
-        transcript = []
+        transcript = {
+            "language": info.language,
+            "segments": []
+        }
         print(f"Detected language: {info.language}")
         print(f"Confidence: {info.language_probability:.2f}")
         for segment in segments:
-            transcript.append(
+            transcript["segments"].append(
                 {
                     "start": segment.start,
                     "end": segment.end,

@@ -1,11 +1,13 @@
-from pathlib import Path
+from app.gemini_translator import GeminiTranslator
 
-from app.transcriber import Transcriber
+translator = GeminiTranslator()
 
-transcriber = Transcriber()
-
-result = transcriber.transcribe(
-    Path("temp/video.wav")
+result = translator.translate_batch(
+    [
+        "Hello",
+        "How are you?",
+        "Welcome to my channel."
+    ]
 )
 
 print(result)

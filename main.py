@@ -1,5 +1,7 @@
 from app.downloader import VideoDownloader
 from app.extractor import AudioExtractor
+from app.transcriber import Transcriber
+from app.translator import Translator
 
 
 def main():
@@ -26,6 +28,29 @@ def main():
 
     print("\nAudio extracted successfully!")
     print(f"Saved at: {audio_path}")
+
+    # Phase 3 - Transcription
+    print("\nTranscribing audio...")
+
+    transcriber = Transcriber()
+    transcript_path = transcriber.transcribe(audio_path)
+
+    print("\nTranscript generated successfully!")
+    print(f"Saved at: {transcript_path}")
+
+    # Phase 4 - Translation
+    print("\nTranslating transcript...")
+
+    translator = Translator()
+
+    translated_path = translator.translate(
+        transcript_path=transcript_path,
+        output_path="temp/translated_transcript.json",
+        target_language="hi",
+    )
+
+    print("\nTranslation completed!")
+    print(f"Saved at: {translated_path}")
 
 
 if __name__ == "__main__":
