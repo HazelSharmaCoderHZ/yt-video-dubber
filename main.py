@@ -1,8 +1,10 @@
+from pathlib import Path
 from app.downloader import VideoDownloader
 from app.extractor import AudioExtractor
 from app.transcriber import Transcriber
 from app.translator import Translator
-
+from app.edge_tts_provider import EdgeTTSProvider
+from app.speech_generator import SpeechGenerator
 
 def main():
     print("=" * 50)
@@ -51,6 +53,17 @@ def main():
 
     print("\nTranslation completed!")
     print(f"Saved at: {translated_path}")
+
+    provider = EdgeTTSProvider()
+
+    generator = SpeechGenerator(
+        provider=provider,
+        output_dir=Path("temp/audio_segments"),
+    )
+
+    generator.generate(
+        Path("temp/translated_transcript.json")
+    )
 
 
 if __name__ == "__main__":
