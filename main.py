@@ -1,10 +1,12 @@
 from pathlib import Path
+from app.audio_aligner import AudioAligner
 from app.downloader import VideoDownloader
 from app.extractor import AudioExtractor
 from app.transcriber import Transcriber
 from app.translator import Translator
 from app.edge_tts_provider import EdgeTTSProvider
 from app.speech_generator import SpeechGenerator
+import subprocess
 
 def main():
     print("=" * 50)
@@ -64,6 +66,30 @@ def main():
     generator.generate(
         Path("temp/translated_transcript.json")
     )
+
+    print("\n=== Aligning Audio ===")
+
+    aligner = AudioAligner()
+    dubbed_audio = aligner.analyze()
+
+    output_video = Path("output_dubbed.mp4")
+
+    subprocess.run([
+        "ffmpeg",
+        "-y",
+        "-i",
+        str(video_path),
+        "-i",
+        str(dubbed_audio),
+        "-map", "0:v:0",
+        "-map", "1:a:0",
+        "-c:v", "copy",
+        "-c:a", "aac",
+        "-shortest",
+        str(output_video),
+    ], check=True)
+
+    print(f"\nDubbed video saved to {output_video}")
 
 
 if __name__ == "__main__":

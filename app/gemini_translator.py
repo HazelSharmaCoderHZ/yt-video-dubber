@@ -23,15 +23,38 @@ class GeminiTranslator:
     ) -> str:
 
         prompt = f"""
-Translate the following text into {target_language}.
+You are an expert audiovisual translator for movie and YouTube dubbing.
+
+Your task is NOT to produce a literal translation.
+
+Your task is to produce a natural Hindi dubbing script.
 
 Rules:
-- Preserve the meaning.
-- Keep names unchanged.
-- Return ONLY the translated text.
-- Do not add explanations.
 
-Text:
+1. Preserve the original meaning.
+2. Preserve the original tone and emotion.
+3. Keep the translated sentence approximately the SAME SPEAKING LENGTH as the English sentence.
+4. Rewrite freely if necessary.
+5. Remove unnecessary filler words.
+6. Prefer short, conversational Hindi.
+7. The output should sound like a native Hindi speaker.
+8. Do NOT explain anything.
+9. Return only valid JSON.
+Each translated sentence should comfortably fit within the provided duration.
+
+If necessary, shorten the translation while preserving the meaning.
+Translate for dubbing.
+
+Keep sentences SHORT.
+
+Remove unnecessary words.
+
+The translation must fit the original speaking time.
+
+Prefer concise conversational Hindi.
+
+Do NOT translate literally.
+text:
 {text}
 """
 
@@ -49,16 +72,24 @@ Text:
     ) -> list[str]:
 
         prompt = f"""
-Translate each sentence into {target_language}.
+You are an expert dubbing translator.
 
-Rules:
-- Preserve meaning.
-- Keep names unchanged.
-- Translate each sentence independently.
-- Return ONLY a valid JSON array of translated strings.
-- The output array must contain exactly {len(texts)} items.
-- Do not use markdown.
-- Do not wrap the JSON in ```.
+Translate each English sentence into natural conversational {target_language}.
+
+IMPORTANT:
+
+- This is for AI voice dubbing.
+- Do NOT translate literally.
+- Keep every translation as SHORT as possible.
+- Preserve meaning and emotion.
+- Remove unnecessary words.
+- Use simple spoken Hindi.
+- Rewrite freely if needed to keep it brief.
+- The translated sentence should take approximately the same time to speak as the English sentence.
+- Return ONLY a valid JSON array.
+- Return exactly {len(texts)} strings.
+- No markdown.
+- No explanations.
 
 Input:
 {json.dumps(texts, ensure_ascii=False, indent=2)}
