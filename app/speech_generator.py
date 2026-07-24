@@ -66,7 +66,7 @@ class SpeechGenerator:
         MAX_ALIGNMENT_ATTEMPTS = 3
         TOLERANCE = 0.10
 
-        rate = "+40%"
+        rate = "-5%"
 
         for attempt in range(MAX_ALIGNMENT_ATTEMPTS):
 
@@ -137,7 +137,7 @@ class SpeechGenerator:
         """
 
         if original_duration <= 0:
-            return "+40%"
+            return "-5%"
 
         ratio = generated_duration / original_duration
 

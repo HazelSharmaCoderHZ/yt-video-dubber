@@ -15,7 +15,7 @@ class Translator:
         self,
         transcript_path: str,
         output_path: str,
-        target_language: str = "hi",
+        target_language: str = "en",
         batch_size: int = 25,
         max_retries: int = 3,
     ):

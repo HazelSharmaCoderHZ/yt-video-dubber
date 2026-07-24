@@ -5,10 +5,10 @@ import edge_tts
 
 
 class EdgeTTSProvider:
-    def __init__(self, voice: str = "hi-IN-SwaraNeural"):
+    def __init__(self, voice: str = "en-US-JennyNeural"):
         self.voice = voice
 
-    async def _generate_async(self, text: str, output_path: Path, rate: str = "+40%"):
+    async def _generate_async(self, text: str, output_path: Path, rate: str = "-5%"):
         communicate = edge_tts.Communicate(
             text=text,
             voice=self.voice,
@@ -20,7 +20,7 @@ class EdgeTTSProvider:
         self,
         text: str,
         output_path: Path,
-        rate: str = "+40%",
+        rate: str = "-5%",
     ):
         output_path.parent.mkdir(parents=True, exist_ok=True)
         asyncio.run(

@@ -50,7 +50,7 @@ def main():
     translated_path = translator.translate(
         transcript_path=transcript_path,
         output_path="temp/translated_transcript.json",
-        target_language="hi",
+        target_language="en",
     )
 
     print("\nTranslation completed!")
